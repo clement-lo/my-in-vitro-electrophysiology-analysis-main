@@ -1,0 +1,31 @@
+# Configuration file for action_potential_analysis.py
+
+# Data Loading Settings
+data:
+  file_path: "data/example_data.abf"  # Path to the input data file
+  file_type: "abf"  # Type of file ('abf' or 'neo')
+
+# Preprocessing Settings
+preprocessing:
+  detrend_signal: true  # Whether to detrend the signal
+  freq_min: 1  # Minimum frequency for bandpass filter (Hz)
+  freq_max: 100  # Maximum frequency for bandpass filter (Hz)
+
+# Spike Detection Settings
+spike_detection:
+  method: "threshold"  # Detection method ('threshold', 'template_matching', 'wavelet', 'machine_learning')
+  threshold: -30.0  # Threshold for spike detection (mV) - used for threshold method
+  wavelet: "db4"  # Wavelet type for wavelet method
+  template: null  # Template for template matching method (set to actual template array)
+  model: null  # Pre-trained model for ML method
+
+# Analysis Settings
+analysis:
+  advanced_isi: true  # Whether to perform advanced ISI analysis
+  burst_isi_threshold: 100  # Maximum ISI in ms to be considered part of a burst
+
+# Visualization Settings
+visualization:
+  interactive: false  # Whether to use interactive Plotly plots
+  save_plots: false  # Whether to save plots to files
+  output_dir: "results/"  # Directory to save output files
