@@ -271,9 +271,26 @@ def main(config):
 if __name__ == "__main__":
     # Load configuration file
     import os
-    config_path = os.path.join(os.path.dirname(__file__), 'advanced_spike_sorting_clustering_config.yaml')
-    with open(config_path, 'r') as file:
-        config = yaml.safe_load(file)
+    import sys
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+    from utils.validation import load_and_validate_config
     
-    # Run the main analysis pipeline using configuration parameters
-    main(config)
+    config_path = os.path.join(os.path.dirname(__file__), 'advanced_spike_sorting_clustering_config.yaml')
+    
+    try:
+        # Define required fields for this analysis
+        required_fields = {
+            'data': ['file_path'],
+            'preprocessing': ['freq_min', 'freq_max', 'common_ref_type'],
+            'spike_sorting': ['sorter_name', 'gpu_available'],
+            'dimensionality_reduction': ['method', 'n_components'],
+            'clustering': ['method']
+        }
+        
+        config = load_and_validate_config(config_path, required_fields)
+        
+        # Run the main analysis pipeline using configuration parameters
+        main(config)
+    except Exception as e:
+        logging.error(f"Failed to run spike sorting analysis: {e}")
+        sys.exit(1)

@@ -64,6 +64,18 @@ def plot_iv_curve(voltage_range, i_ion):
         voltage_range (ndarray): Array of membrane voltages (in mV).
         i_ion (ndarray): Simulated ionic currents for each voltage in voltage_range.
     """
+    # Add validation
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+    from utils.validation import validate_array
+    
+    voltage_range = validate_array(voltage_range, ndim=1, param_name="voltage_range")
+    i_ion = validate_array(i_ion, ndim=1, param_name="i_ion")
+    
+    if len(voltage_range) != len(i_ion):
+        raise ValueError("voltage_range and i_ion must have the same length")
+    
     plt.figure(figsize=(8, 6))
     plt.plot(voltage_range, i_ion, label='Ionic Current')
     plt.xlabel('Membrane Voltage (mV)')
@@ -74,7 +86,7 @@ def plot_iv_curve(voltage_range, i_ion):
     plt.show()
 
 # Function to calculate and plot conductance curves
-def plot_conductance_curve(voltage_range, i_ion, g_max):
+def plot_conductance_curve(voltage_range, i_ion, g_max, e_rev=0.0):
     """
     Plot the conductance curve for ion channel kinetics.
 
@@ -82,8 +94,27 @@ def plot_conductance_curve(voltage_range, i_ion, g_max):
         voltage_range (ndarray): Array of membrane voltages (in mV).
         i_ion (ndarray): Simulated ionic currents for each voltage in voltage_range.
         g_max (float): Maximum conductance of the ion channel (in µS).
+        e_rev (float): Reversal potential (in mV). Default is 0.0 mV.
     """
-    conductance = i_ion / (voltage_range - e_rev)  # Conductance calculation
+    # Add validation
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+    from utils.validation import validate_array, validate_numeric_range
+    
+    voltage_range = validate_array(voltage_range, ndim=1, param_name="voltage_range")
+    i_ion = validate_array(i_ion, ndim=1, param_name="i_ion")
+    validate_numeric_range(g_max, min_val=0, param_name="g_max")
+    
+    if len(voltage_range) != len(i_ion):
+        raise ValueError("voltage_range and i_ion must have the same length")
+    
+    # Avoid division by zero
+    denominator = voltage_range - e_rev
+    if np.any(np.abs(denominator) < 1e-10):
+        raise ValueError(f"voltage_range contains values too close to e_rev ({e_rev})")
+    
+    conductance = i_ion / denominator  # Conductance calculation
     plt.figure(figsize=(8, 6))
     plt.plot(voltage_range, conductance, label='Conductance (g)')
     plt.xlabel('Membrane Voltage (mV)')
