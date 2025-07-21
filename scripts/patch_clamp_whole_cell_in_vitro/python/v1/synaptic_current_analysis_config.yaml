@@ -1,0 +1,27 @@
+# Configuration for Synaptic Current Analysis
+# Simple configuration for educational/prototyping use
+
+detection:
+  # Event detection parameters
+  threshold_method: 'zscore'  # 'zscore' or 'absolute'
+  threshold_value: 3.0  # z-score or pA depending on method
+  min_event_interval: 10  # ms
+  min_amplitude: 5  # pA
+  
+filtering:
+  # Optional pre-filtering
+  enabled: true
+  low_pass: 2000  # Hz
+  high_pass: 1  # Hz
+  
+analysis:
+  # Event characterization
+  baseline_window: 2  # ms before event
+  peak_window: 5  # ms after threshold crossing
+  decay_fit: 'exponential'  # 'exponential' or 'biexponential'
+  
+visualization:
+  # Plotting options
+  show_events: true
+  overlay_average: true
+  time_window: 100  # ms around event

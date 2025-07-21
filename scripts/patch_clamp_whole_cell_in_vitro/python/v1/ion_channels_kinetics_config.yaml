@@ -1,0 +1,30 @@
+# Configuration for Ion Channel Kinetics Analysis
+# Simple configuration for educational/prototyping use
+
+activation:
+  # Activation curve fitting
+  fit_function: 'boltzmann'  # 'boltzmann' or 'hill'
+  v_half_init: -30  # mV, initial guess
+  slope_init: 5  # mV, initial guess
+  
+inactivation:
+  # Inactivation curve fitting
+  fit_function: 'boltzmann'
+  v_half_init: -60  # mV, initial guess
+  slope_init: -5  # mV, initial guess
+  
+kinetics:
+  # Time constant analysis
+  tau_fit: 'exponential'  # 'exponential' or 'biexponential'
+  voltage_steps: [-80, -60, -40, -20, 0, 20, 40]  # mV
+  
+reversal_potential:
+  # Nernst/GHK calculations
+  temperature: 22  # Celsius
+  ion_type: 'K'  # 'Na', 'K', 'Ca', 'Cl'
+  
+visualization:
+  # Plotting options
+  show_fits: true
+  confidence_intervals: true
+  plot_residuals: false

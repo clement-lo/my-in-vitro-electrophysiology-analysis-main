@@ -1,0 +1,36 @@
+# Configuration for Network Connectivity and Plasticity Analysis
+# Simple configuration for educational/prototyping use
+
+connectivity:
+  # Connectivity detection parameters
+  method: 'cross_correlation'  # 'cross_correlation' or 'transfer_entropy'
+  time_window: 50  # ms
+  significance_threshold: 0.05  # p-value
+  min_spike_count: 100  # minimum spikes per neuron
+  
+correlation:
+  # Cross-correlation parameters
+  bin_size: 1  # ms
+  max_lag: 100  # ms
+  normalize: true
+  
+plasticity:
+  # Synaptic plasticity analysis
+  protocol: 'paired_pulse'  # 'paired_pulse', 'tetanic', 'stdp'
+  baseline_duration: 300  # seconds
+  test_duration: 600  # seconds
+  
+  # Paired-pulse specific
+  intervals: [20, 50, 100, 200, 500]  # ms
+  
+network_metrics:
+  # Basic network measures
+  calculate_clustering: true
+  calculate_path_length: true
+  calculate_degree_distribution: true
+  
+visualization:
+  # Plotting options
+  connectivity_matrix: true
+  raster_plot: true
+  plasticity_timecourse: true

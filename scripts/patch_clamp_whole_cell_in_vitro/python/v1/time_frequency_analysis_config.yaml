@@ -1,0 +1,46 @@
+# Configuration for Time-Frequency Analysis
+# Simple configuration for educational/prototyping use
+
+spectrogram:
+  # Spectrogram parameters
+  method: 'scipy'  # 'scipy' or 'matplotlib'
+  window: 'hann'  # window function
+  nperseg: 256  # samples per segment
+  noverlap: 128  # overlap samples
+  nfft: 512  # FFT points
+  
+power_spectrum:
+  # Power spectral density
+  method: 'welch'  # 'welch' or 'periodogram'
+  frequency_range: [0.1, 500]  # Hz
+  log_scale: true
+  
+coherence:
+  # Coherence analysis
+  calculate: true
+  frequency_bands:
+    delta: [0.1, 4]
+    theta: [4, 8]
+    alpha: [8, 13]
+    beta: [13, 30]
+    gamma: [30, 100]
+    high_gamma: [100, 200]
+  
+wavelet:
+  # Wavelet transform (if implemented)
+  mother_wavelet: 'morlet'
+  frequencies: 'auto'  # or specific array
+  n_cycles: 7
+  
+filtering:
+  # Pre-processing filters
+  detrend: true
+  remove_line_noise: true
+  line_frequency: 60  # Hz (50 or 60)
+  
+visualization:
+  # Plotting options
+  colormap: 'viridis'
+  log_frequency: false
+  show_colorbar: true
+  time_range: 'auto'  # or [start, end] in seconds

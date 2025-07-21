@@ -1,3 +1,4 @@
+# Last reviewed by Claude Desktop on 2025-07-17 22:37:57
 """
 Validation utilities for electrophysiology analysis scripts.
 Provides reusable validation functions for parameters, configurations, and data.

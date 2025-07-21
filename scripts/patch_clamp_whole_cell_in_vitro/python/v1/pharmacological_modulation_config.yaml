@@ -1,0 +1,44 @@
+# Configuration for Pharmacological Modulation Analysis
+# Simple configuration for educational/prototyping use
+
+dose_response:
+  # Dose-response curve fitting
+  model: 'hill'  # 'hill' or 'logistic'
+  concentrations_unit: 'uM'  # micromolar
+  normalize_response: true
+  
+  # Hill equation parameters
+  n_hill_init: 1.0  # initial guess for Hill coefficient
+  ec50_init: 10.0  # initial guess for EC50/IC50
+  
+time_series:
+  # Drug application time series
+  baseline_duration: 300  # seconds before drug
+  drug_duration: 600  # seconds of drug application
+  washout_duration: 600  # seconds after drug
+  
+  # Response windows
+  response_window: 60  # seconds to average for response
+  
+modulation_analysis:
+  # Effect quantification
+  parameters_to_track:
+    - 'amplitude'
+    - 'frequency'
+    - 'decay_time'
+  
+  # Statistical testing
+  test_type: 'paired_t'  # 'paired_t' or 'wilcoxon'
+  significance_level: 0.05
+  
+antagonist_analysis:
+  # For competitive inhibition studies
+  schild_analysis: false
+  antagonist_concentrations: []  # uM
+  
+visualization:
+  # Plotting options
+  show_raw_traces: true
+  show_dose_response: true
+  show_time_course: true
+  error_bars: 'sem'  # 'sem' or 'std'
