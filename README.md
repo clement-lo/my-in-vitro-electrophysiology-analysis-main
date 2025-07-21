@@ -1,91 +1,185 @@
-# My In Vitro Electrophysiology Analysis Repository
+# In Vitro Electrophysiology Analysis Framework
 
-## Overview
-This repository provides a comprehensive toolkit for analyzing in vitro electrophysiology data, focusing on both classic electrophysiology setups (e.g., single-channel recordings, patch-clamp data) and multi-electrode array (MEA) setups. It integrates well-established libraries like Neo, Elephant, OpenElectrophy, and PyABF, offering robust support for a wide range of data formats and advanced analytical methods. It is designed to support researchers and analysts in neuroscience with modular, flexible, and extensible tools for data analysis, visualization, and interpretation.
+## A Comprehensive Toolkit for Patch-Clamp and Multi-Electrode Array Data Analysis
+
+### Overview
+
+This repository presents a sophisticated, dual-implementation framework for in vitro electrophysiology data analysis, developed to demonstrate research capabilities in computational neuroscience. It features both educational (v1) and research-grade (v2) implementations, showcasing progression from fundamental concepts to production-ready analysis pipelines.
+
+**Key Highlights:**
+- 🔬 **Dual Architecture**: Educational v1 for learning/prototyping, Research-grade v2 for production
+- 📊 **Multi-Format Support**: ABF, NWB, CSV, HDF5, Neo-compatible formats
+- 🧮 **Comprehensive Analyses**: Action potentials, synaptic events, ion channels, network dynamics
+- 🔧 **Modern Standards**: NWB compatibility, object-oriented design, extensive validation
+- 📈 **Publication Ready**: Statistical validation, quality control, reproducible workflows
+
+### Background & Motivation
+
+This framework bridges computational approaches from diagnostic development (automated IHC/ISH assays) to electrophysiology analysis, demonstrating transferable skills in:
+- Signal processing and time-series analysis
+- Statistical validation and quality control
+- Systematic method development and validation
+- Research-grade software engineering
 
 ## Repository Structure
-The repository is organized into the following directories to ensure modularity, clarity, and ease of navigation:
+
 ```plaintext
-├── README.md                                     # Main documentation file
-├── requirements.txt                              # Python dependencies for the project
-├── data/                                         # Directory for storing raw and preprocessed data
-├── results/                                      # Output directory for results from analyses
-├── scripts/                                      # Main directory containing all the analysis scripts
-│   ├── classic_in_vitro/                            # Directory for single-channel or limited-channel analyses
-│   │   ├── python/                               # Python scripts for classic setup analyses
-│   │   │   ├── spike_sorting_patch_clamp_analysis.py
-│   │   │   ├── synaptic_current_analysis.py
-│   │   │   ├── action_potential_analysis.py
-│   │   ├── matlab/                               # MATLAB scripts for classic setup analyses
-│   │   │   ├── spike_sorting_patch_clamp_analysis.m
-│   │   │   ├── synaptic_current_analysis.m
-│   │   │   ├── action_potential_analysis.m
-│   │   ├── notebooks/                            # Jupyter Notebooks for classic setup analyses
-│   │   │   ├── 01_Spike_Sorting_Patch_Clamp_Analysis.ipynb
-│   │   │   ├── 02_Synaptic_Current_Analysis.ipynb
-│   │   │   ├── 03_Action_Potential_Analysis.ipynb
-│   ├── mea_in_vitro/                             # Directory for multi-electrode array analyses
-│   │   ├── python/                               # Python scripts for MEA analyses
+my-in-vitro-electrophysiology-analysis/
+├── README.md                          # This file
+├── QUICKSTART.md                      # Quick start guide
+├── CONTRIBUTING.md                    # Contribution guidelines
+├── CHANGELOG.md                       # Version history
+├── MIGRATION_GUIDE.md                 # Migration from v1 to v2
+├── requirements.txt                   # Python dependencies
+├── LICENSE                            # License information
+├── data/                              # Sample data directory
+├── test_data/                         # Test datasets (CSV, NWB, DAT formats)
+│   ├── README.md
+│   ├── action_potential_test.csv
+│   ├── synaptic_current_test.nwb
+│   └── ...
+├── scripts/                           # Analysis implementations
+│   ├── patch_clamp_whole_cell_in_vitro/  # Patch-clamp analyses
+│   │   ├── README.md                  # Detailed module documentation
+│   │   ├── DEPENDENCIES.md            # Module-specific dependencies
+│   │   ├── python/
+│   │   │   ├── v1/                    # Educational implementations
+│   │   │   │   ├── action_potential_analysis.py
+│   │   │   │   ├── synaptic_current_analysis.py
+│   │   │   │   ├── ion_channels_kinetics.py
+│   │   │   │   └── ... (with config files)
+│   │   │   └── v2/                    # Research-grade framework
+│   │   │       ├── README.md
+│   │   │       ├── core/              # Core infrastructure
+│   │   │       ├── common/            # Shared utilities
+│   │   │       ├── modules/           # Analysis modules
+│   │   │       ├── utils/             # Helper functions
+│   │   │       └── workflows/         # Complete pipelines
+│   │   ├── matlab/
+│   │   │   ├── v1/                    # MATLAB implementations
+│   │   │   └── v2/                    # Enhanced MATLAB framework
+│   │   └── notebooks/
+│   │       └── v1/                    # Interactive Jupyter notebooks
+│   ├── mea_in_vitro/                  # Multi-electrode array analyses
+│   │   ├── python/
 │   │   │   ├── advanced_spike_sorting_clustering.py
 │   │   │   ├── connectivity_analysis.py
-│   │   │   ├── pharmacological_modulation_analysis.py
 │   │   │   ├── network_dynamics_analysis.py
-│   │   ├── matlab/                               # MATLAB scripts for MEA analyses
-│   │   │   ├── advanced_spike_sorting_clustering.m
-│   │   │   ├── connectivity_analysis.m
-│   │   │   ├── pharmacological_modulation_analysis.m
-│   │   │   ├── network_dynamics_analysis.m
-│   │   ├── notebooks/                            # Jupyter Notebooks for MEA analyses
-│   │   │   ├── 01_Advanced_Spike_Sorting_Clustering.ipynb
-│   │   │   ├── 02_Connectivity_Analysis.ipynb
-│   │   │   ├── 03_Pharmacological_Modulation_Analysis.ipynb
-│   │   │   ├── 04_Network_Dynamics_Analysis.ipynb
-├── tests/                                        # Unit tests for the analysis scripts
-│   ├── test_spike_sorting_patch_clamp_analysis.py
-│   ├── test_synaptic_current_analysis.py
-│   ├── test_action_potential_analysis.py
-│   ├── test_advanced_spike_sorting_clustering.py
-│   ├── test_connectivity_analysis.py
-│   ├── test_pharmacological_modulation_analysis.py
-│   ├── test_network_dynamics_analysis.py
-├── examples/                                     # Example datasets and workflows
-│   ├── example_data.abf
-│   └── example_workflow.ipynb
-├── CONTRIBUTING.md                               # Guidelines for contributing to the repository
-└── LICENSE.md                                    # Licensing information
+│   │   │   └── pharmacological_modulation_analysis.py
+│   │   └── matlab/
+│   ├── utils/                         # Validation and utility scripts
+│   │   ├── validation.py
+│   │   ├── validate_modules.py
+│   │   └── validate_modules_matlab.m
+│   └── test_data_generator.py         # Generate test datasets
 ```
-## Key Features
+## Technical Architecture
 
-- Modular Codebase: Easy to extend and integrate new analysis methods.
-- Python and MATLAB Compatibility: Scripts are provided in both Python and MATLAB for flexibility.
-- Detailed Documentation: Step-by-step instructions for setting up and running each analysis.
-- Comprehensive Examples: Jupyter Notebooks provided for interactive data exploration and visualization.
+### v1 - Educational Implementation
+- **Purpose**: Learning, prototyping, teaching
+- **Design**: Simple, function-based, minimal dependencies
+- **Best For**: Quick analyses, educational demonstrations, concept validation
 
-## Table of Contents
-1. [Getting Started](#getting-started)
-2. [Installation](#installation)
-3. [General Usage Guide](#usage-guide)
-   - [Python Scripts (.py)](#python-scripts-py)
-   - [Jupyter Notebooks (.ipynb)](#jupyter-notebooks-ipynb)
-   - [MATLAB Scripts](#matlab-scripts)
-4. [Data Formats and Handling](#4-data-formats-and-handling)   
-5. [Analysis Types](#analysis-types)
-5.1 [Classic Electrophysiology Setups](#classic-electrophysiology-setups)
-   - [Spike Sorting](#spike-sorting)
-   - [Synaptic Current Analysis](#synaptic-current-analysis)
-   - [Action Potential Analysis](#action-potential-analysis)
-5.2 [Multi-Electrode Array (MEA) Setups](#multi-electrode-array-mea-setups)
-   - [Advanced Spike Sorting and Clustering](#advanced-spike-sorting-and-clustering)   
-   - [Connectivity Analysis](#connectivity-analysis)
-   - [Pharmacological Modulation Analysis](#pharmacological-modulation-analysis)
-   - [Network Dynamics Analysis](#network-dynamics-analysis)   
-6. [Modularity and Extensibility](#modularity-and-extensibility)
-7. [Integration with established libraries](#integration-with-established-libraries)
-8. [Code, Data Visualisation and Interactive Notebooks](#code-data-visualisation-and-interactive-notebooks)
-9. [Unit Testing and Continuous Integration (CI)](#unit-testing-and-continuous-integration-ci)
-10. [Example Datasets and Detailed Workflows](#10-example-datasets-and-detailed-workflows)
-11. [License](#11-license)
-12. [References](#references)
+### v2 - Research-Grade Framework
+- **Purpose**: Production research, complex pipelines, extensible architecture
+- **Design**: Object-oriented, multi-format support, comprehensive validation
+- **Best For**: Publication-quality analysis, batch processing, custom workflows
+
+## Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/clement-lo/my-in-vitro-electrophysiology-analysis-main.git
+cd my-in-vitro-electrophysiology-analysis
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Example Usage
+
+#### Simple Analysis (v1)
+```python
+# Quick action potential analysis
+from scripts.patch_clamp_whole_cell_in_vitro.python.v1 import action_potential_analysis
+
+# Load and analyze
+data = action_potential_analysis.load_data('recording.csv')
+spikes = action_potential_analysis.detect_action_potentials(data, threshold=-20)
+action_potential_analysis.plot_results(data, spikes)
+```
+
+#### Advanced Pipeline (v2)
+```python
+# Research-grade analysis pipeline
+from scripts.patch_clamp_whole_cell_in_vitro.python.v2.core.data_loader import DataLoader
+from scripts.patch_clamp_whole_cell_in_vitro.python.v2.core.data_pipeline import DataPipeline
+from scripts.patch_clamp_whole_cell_in_vitro.python.v2.action_potential_analysis_merged import run_complete_analysis
+
+# Multi-format data loading
+loader = DataLoader()
+data = loader.load_file("recording.abf")  # Supports ABF, NWB, CSV, HDF5
+
+# Complete analysis with validation
+results = run_complete_analysis(
+    data_file="recording.abf",
+    output_dir="./results",
+    config_file="config.yaml"
+)
+```
+
+## Analysis Capabilities
+
+### Patch-Clamp & Whole-Cell Analyses
+
+#### 1. Action Potential Analysis
+- **Detection**: Multiple algorithms (threshold, derivative, template matching)
+- **Characterization**: Amplitude, width, AHP, threshold dynamics
+- **Advanced Metrics**: Adaptation, accommodation, burst analysis
+- **Formats**: CSV (v1), ABF/NWB/HDF5 (v2)
+
+#### 2. Synaptic Current Analysis
+- **Event Detection**: mEPSCs, mIPSCs, evoked responses
+- **Kinetics**: Rise time, decay constants, charge transfer
+- **Plasticity**: Paired-pulse, frequency-dependent changes
+- **Input-Output**: Stimulus-response relationships
+
+#### 3. Ion Channel Analysis
+- **I-V Relationships**: Automated curve fitting
+- **Kinetics**: Activation, inactivation, recovery
+- **Conductance**: G-V curves, reversal potentials
+- **Pharmacology**: Dose-response, Hill equation fitting
+
+#### 4. Network Connectivity & Dynamics
+- **Connectivity Mapping**: Cross-correlation, coherence analysis
+- **Synchronization**: Phase locking, synchrony indices
+- **Graph Theory**: Centrality, clustering, path analysis
+- **State Transitions**: Network state identification
+
+#### 5. Pharmacological Modulation
+- **Dose-Response**: IC50/EC50 calculation
+- **Time Course**: Drug wash-in/wash-out kinetics
+- **Multi-Drug**: Interaction analysis, isobolograms
+- **Statistical Validation**: Paired comparisons, effect sizes
+
+#### 6. Time-Frequency Analysis
+- **Spectral**: FFT, multitaper, wavelet transforms
+- **Oscillations**: Peak detection, power analysis
+- **Cross-Frequency**: Phase-amplitude coupling
+- **Temporal Dynamics**: Time-varying spectral features
+
+### Multi-Electrode Array (MEA) Analyses
+
+- **Spike Sorting**: Kilosort-compatible, PCA/ICA clustering
+- **Network Dynamics**: Population activity, avalanche analysis
+- **Spatial Patterns**: Wave propagation, source localization
+- **Connectivity**: Directed/undirected network inference
 
 ## 1. Getting Started
 
@@ -175,100 +269,225 @@ Neo Data Format: Supported by libraries like Neo for standardized data handling.
 MATLAB Files: For users with custom data formats, we provide functions to load and preprocess these data types.
 Ensure your data is properly formatted and organized in the data/ directory before running any analysis.
 
-## 5. Analysis Types
-This repository is divided into two main types of analyses for in vitro electrophysiology:
-### 5.1 Classic Electrophysiology Setups
-Classic electrophysiology setups focus on single-channel recordings, such as patch-clamp recordings. These setups are common in traditional in vitro studies to capture single-neuron or synaptic activity.
-#### a. Spike Sorting and Patch Clamp Analysis
-- Objective: Detect and sort spikes from intracellular patch-clamp data and compute firing rates.
-- Methods:
-- - Spike Detection: Threshold-based approaches to detect spikes in intracellular signals.
-- - Feature Extraction: Extract key features like spike amplitude and waveform shape for clustering.
-- - Clustering Algorithms: Methods like K-means and Gaussian Mixture Models (GMM) for sorting spikes into units.
-- Tools: Python, MATLAB, PyABF, OpenElectrophy.
-- Outcome: Sorted spikes, firing rate histograms, raster plots.
-#### b. Synaptic Current Analysis
-- Objective: Analyze synaptic currents like excitatory postsynaptic currents (EPSCs) and inhibitory postsynaptic currents (IPSCs).
-- Methods:
-- - Peak Detection: Find peaks in synaptic currents.
-- - Kinetic Analysis: Fit decay and rise times of synaptic events.
-- Tools: Python, MATLAB, OpenElectrophy.
-- Outcome: Synaptic current traces, kinetics plots.
-#### c. Action Potential Analysis
-- Objective: Analyze action potentials to study neuronal excitability and firing patterns.
-- Methods:
-- - Threshold Crossing: Detect action potentials based on a voltage threshold.
-- - Interspike Interval (ISI) Analysis: Analyze the timing between consecutive spikes.
-- Tools: Python, MATLAB, OpenElectrophy.
-- Outcome: ISI histograms, action potential traces.
+## 5. Implementation Structure
 
-### 5.2. Multi-Electrode Array (MEA) Setups
-Multi-electrode array (MEA) setups are designed for high-density recordings, allowing for more comprehensive analysis of network-level dynamics in vitro.
-#### a. Advanced Spike Sorting and Clustering
-- Objective: Perform advanced spike sorting and clustering for MEA recordings to analyze network activity.
-- Methods:
-- - Dimensionality Reduction Techniques: PCA, t-SNE, and UMAP for visualizing high-dimensional spike features.
-- - Spike Clustering Algorithms: HDBSCAN, Kilosort, MountainSort for clustering spikes across electrodes.
-- Tools: Python, MATLAB, SpikeInterface, Kilosort.
-- Outcome: Clustered spikes, spike train cross-correlograms.
-#### b. Connectivity Analysis
-- Objective: Analyze functional connectivity between neurons recorded from MEA setups to understand network communication.
-- Methods:
-- - Cross-Correlation: Measure correlation between spike trains to infer connectivity.
-- - Granger Causality: Identify directional interactions between neurons.
-- Tools: Python, MATLAB, Elephant.
-- Outcome: Connectivity matrices, causality graphs.
-#### c. Pharmacological Modulation Analysis
-- Objective: Assess the effect of pharmacological agents on neuronal activity.
-- Methods:
-- - Drug Application Protocols: Apply pharmacological agents and record responses.
-- - Response Quantification: Measure changes in firing rates, synaptic currents.
-- Tools: Python, MATLAB.
-- Outcome: Dose-response curves, modulation plots.
-#### d. Network Dynamics Analysis
-- Objective: Model the brain as a network and analyze its structure, dynamics, and modular organization.
-- Methods:
-- - Graph Theory Metrics: Degree, betweenness, closeness centrality.
-- - Community Detection Algorithms: Louvain, Leiden algorithms for detecting clusters in brain networks.
-- Tools: Python, MATLAB, NetworkX.
-- Outcome: Network graphs, community structures.
+### 5.1 Patch-Clamp & Whole-Cell Analyses (`scripts/patch_clamp_whole_cell_in_vitro/`)
 
-## 6. Modularity and Extensibility
-The repository is designed to be modular, allowing for easy extension by adding new modules for specific analyses. Each type of analysis is encapsulated in its own script or function to enable reuse and extension. Contributing new analysis modules or extending existing ones can be done by following the structure and guidelines provided.
+This section features a sophisticated dual-implementation approach:
 
-## 7. Integration with Established Libraries
-The repository integrates popular libraries such as:
-- Neo: For standardized data handling and storage.
-- Elephant: For advanced time-frequency analysis and spike train analysis.
-- OpenElectrophy: For cellular-level data analysis and handling.
-- PyABF: For handling Axon Binary Format (ABF) files commonly used in patch-clamp recordings.
+#### **Dual Version Architecture**
+- **v1 (Educational)**: Simple, clear implementations for learning and quick analyses
+- **v2 (Research-Grade)**: Production-ready framework with extensive features
 
-## 8. Code, Data Visualization and Interactive Notebooks
-This repository provides Jupyter Notebooks for each analysis type, offering step-by-step guidance and interactive visualizations. Notebooks allow users to explore data interactively, modify parameters, and visualize results dynamically.
+#### **Available Implementations**
 
-## 9. Unit Testing and Continuous Integration (CI)
-Unit tests are provided for each analysis script to ensure robustness and reliability. We recommend using GitHub Actions for Continuous Integration (CI) to run these tests automatically upon code updates.
+| Analysis Type | Python v1 | Python v2 | MATLAB v1 | MATLAB v2 | Notebooks |
+|--------------|-----------|-----------|-----------|-----------|-----------|
+| Action Potentials | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Synaptic Currents | ✅ | ✅ | ✅ | 🔧 | ✅ |
+| Ion Channels | ✅ | ✅ | ✅ | 🔧 | ✅ |
+| Network Connectivity | ✅ | ✅ | ✅ | 🔧 | ✅ |
+| Pharmacology | ✅ | ✅ | ✅ | 🔧 | ✅ |
+| Time-Frequency | ✅ | ✅ | ✅ | 🔧 | ✅ |
 
-## 10. Example Datasets and Detailed Workflows
-Example datasets and workflows are included to guide users through data preprocessing, analysis, and interpretation. These examples are located in the examples/ directory and provide end-to-end tutorials for various analyses.
+#### **Python Implementations**
+
+**v1 Structure** (`python/v1/`):
+```
+├── action_potential_analysis.py          # AP detection and characterization
+├── synaptic_current_analysis.py          # EPSC/IPSC analysis
+├── ion_channels_kinetics.py              # Channel properties
+├── network_connectivity_plasticity_analysis.py  # Connectivity metrics
+├── pharmacological_modulation.py         # Drug effects
+├── time_frequency_analysis.py            # Spectral analysis
+└── *_config.yaml                         # Configuration files for each module
+```
+
+**v2 Structure** (`python/v2/`):
+```
+├── core/                                 # Framework infrastructure
+│   ├── base_analyzer.py                  # Abstract base classes
+│   ├── data_loader.py                    # Multi-format loading
+│   └── config_manager.py                 # Configuration system
+├── modules/                              # Analysis modules
+│   ├── action_potential/                 # Comprehensive AP analysis
+│   ├── synaptic/                        # Event detection & kinetics
+│   ├── ion_channels/                    # State modeling
+│   └── ...                              # Other specialized modules
+├── common/                              # Shared utilities
+│   ├── preprocessing/                   # Signal processing
+│   ├── statistics/                      # Statistical tools
+│   └── visualization/                   # Plotting utilities
+└── workflows/                           # Complete pipelines
+```
+
+#### **MATLAB Implementations** (`matlab/v1/`, `matlab/v2/`)
+- Parallel implementations for MATLAB users
+- v1: Direct function-based approach
+- v2: Object-oriented framework (in development)
+
+#### **Interactive Notebooks** (`notebooks/v1/`)
+- Step-by-step tutorials
+- Visual exploration of concepts
+- Ready-to-use analysis templates
+
+### 5.2 Multi-Electrode Array Analyses (`scripts/mea_in_vitro/`)
+
+MEA analyses are implemented as specialized tools without v1/v2 separation:
+
+#### **Python Scripts**
+- `advanced_spike_sorting_clustering.py` - Multi-channel spike sorting with PCA/ICA
+- `connectivity_analysis.py` - Network connectivity inference
+- `network_dynamics_analysis.py` - Population dynamics and synchronization
+- `pharmacological_modulation_analysis.py` - Multi-site drug effect analysis
+
+#### **Key Features**
+- Optimized for high-channel-count data
+- Spatial analysis capabilities
+- Population-level metrics
+- Parallel processing support
+
+#### **Why No v1/v2 for MEA?**
+MEA analysis is inherently complex and specialized, requiring sophisticated algorithms from the start. The implementations are already research-grade with built-in configurability.
+
+## 6. Extending the Framework
+
+### Adding Custom Analyses
+
+#### For v1 (Simple approach):
+```python
+# Create new analysis in scripts/patch_clamp_whole_cell_in_vitro/python/v1/
+def custom_analysis(data, params):
+    # Your analysis logic
+    return results
+```
+
+#### For v2 (Framework approach):
+```python
+# Extend base analyzer in v2
+from scripts.patch_clamp_whole_cell_in_vitro.python.v2.core.base_analyzer import BaseAnalyzer
+
+class CustomAnalyzer(BaseAnalyzer):
+    def analyze(self, data, **kwargs):
+        # Your sophisticated analysis
+        return self.create_results(...)
+```
+
+### Contributing Guidelines
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+
+## 7. Dependencies & Integration
+
+### Core Dependencies
+```
+numpy>=1.21.0          # Numerical computing
+scipy>=1.7.0           # Scientific computing
+matplotlib>=3.4.0      # Visualization
+pandas>=1.3.0          # Data manipulation
+pyabf>=2.3.0           # ABF file support
+pynwb>=2.0.0           # NWB format support
+neo>=0.10.0            # Multi-format compatibility
+h5py>=3.0.0            # HDF5 support
+pyyaml>=5.4.0          # Configuration files
+tqdm>=4.62.0           # Progress bars
+scikit-learn>=0.24.0   # Machine learning tools
+networkx>=2.6.0        # Network analysis
+```
+
+### Library Integrations
+- **Neo**: Unified data object model for electrophysiology
+- **PyABF**: Native support for Axon Binary Format files
+- **PyNWB**: Neurodata Without Borders standard compliance
+- **SciPy**: Signal processing and statistics
+- **NetworkX**: Graph theory and network analysis
+
+## 8. Validation & Testing
+
+### Automated Validation
+```bash
+# Run validation suite
+python scripts/utils/validate_modules.py
+
+# MATLAB validation
+matlab -batch "run('scripts/utils/validate_modules_matlab.m')"
+```
+
+### Test Data Generation
+```bash
+# Generate test datasets
+python scripts/test_data_generator.py --format all
+```
+
+### Quality Assurance
+- Unit tests for core functionality
+- Integration tests for workflows
+- Validation against published methods
+- Continuous integration ready
+
+## 9. Documentation & Resources
+
+### Available Documentation
+- **Main README**: This file
+- **Module README**: `scripts/patch_clamp_whole_cell_in_vitro/README.md`
+- **v2 Framework**: `scripts/patch_clamp_whole_cell_in_vitro/python/v2/README.md`
+- **Quick Start**: `QUICKSTART.md`
+- **Migration Guide**: `MIGRATION_GUIDE.md`
+
+### Interactive Learning
+- **Jupyter Notebooks**: Step-by-step tutorials in `notebooks/v1/`
+- **Example Workflows**: Complete analysis pipelines
+- **Test Data**: Sample datasets in multiple formats
+
+## 10. Future Development
+
+### Planned Enhancements
+- **v2 MATLAB**: Complete object-oriented MATLAB implementation
+- **Deep Learning**: Integration with spike sorting neural networks
+- **Cloud Support**: Distributed processing for large datasets
+- **GUI Interface**: User-friendly graphical interface for v1 tools
+- **Real-time Analysis**: Online processing capabilities
+
+### Research Applications
+This framework is designed to support cutting-edge research in:
+- Synaptic plasticity mechanisms
+- Neural circuit mapping
+- Drug discovery and screening
+- Disease model characterization
+- Brain-computer interfaces
 
 ## 11. License
-This repository is available under a dual-license model:
 
-1. **Academic Use License - GNU General Public License v3.0 (GPL-3.0):**
+This repository is available under the GNU General Public License v3.0 (GPL-3.0) for academic and research use. See [LICENSE](LICENSE) for details.
 
-   - The code in this repository is available for academic, research, and educational purposes under the GNU General Public License v3.0. This license allows you to use, modify, and distribute the code, provided that any derivative works are also licensed under the GPL-3.0.
+For commercial licensing inquiries, please contact the repository maintainer.
 
-2. **Commercial License:**
+## 12. Author & Contact
 
-   - For companies, organizations, or individuals seeking to use this code in proprietary software or for commercial purposes, a separate commercial license is required. This license allows the use of the code without the restrictions of the GPL, including the ability to keep derivative works closed-source.
+**Clement Lo**  
+*BSc Applied Medical Sciences, MRes Translational Neuroscience (UCL)*
 
-   If you are interested in obtaining a commercial license, please contact me to discuss further
+This repository demonstrates the application of systematic analysis approaches from diagnostic development to computational neuroscience, showcasing transferable skills in signal processing, statistical validation, and research software engineering.
 
-# References
-- [Neo](https://neo.readthedocs.io/en/latest/)
-- [Elephant](https://elephant.readthedocs.io/en/latest/)
-- [OpenElectrophy](https://open-ephys.github.io/analysis-tools/)
-- [PyABF](https://github.com/swharden/pyabf)
-- [Kilosort](https://github.com/MouseLand/Kilosort)
-- [NetworkX](https://networkx.org/)
+## 13. References
+
+### Core Libraries
+- [Neo](https://neo.readthedocs.io/en/latest/) - Unified electrophysiology data handling
+- [PyABF](https://github.com/swharden/pyabf) - Axon Binary Format support
+- [PyNWB](https://pynwb.readthedocs.io/) - Neurodata Without Borders
+- [SciPy](https://scipy.org/) - Scientific computing in Python
+- [NetworkX](https://networkx.org/) - Network analysis
+
+### Electrophysiology Methods
+- Pernía-Andrade et al. (2012) - Spike sorting methodology
+- Stimberg et al. (2014) - Brian 2 simulator
+- Rossant et al. (2016) - Spike sorting review
+- Jun et al. (2017) - Real-time spike sorting
+
+### Standards & Best Practices
+- [NWB](https://www.nwb.org/) - Neurodata standardization
+- [FAIR](https://www.go-fair.org/) - Data principles
+- [BIDS](https://bids.neuroimaging.io/) - Brain imaging data structure
+
+---
+
+*Repository developed to demonstrate computational neuroscience capabilities for research positions in neurophysiology and neuroengineering.*
