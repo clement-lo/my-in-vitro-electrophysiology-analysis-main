@@ -183,7 +183,7 @@ results = run_complete_analysis(
 
 ## 1. Getting Started
 
-This section will guide you through setting up the repository on your local machine and understanding the fundamental steps to run analyses.
+This section will guide you through setting up the repository on your machine and understanding the fundamental steps to run analyses.
 
 ### Prerequisites
 
@@ -273,11 +273,11 @@ Ensure your data is properly formatted and organized in the data/ directory befo
 
 ### 5.1 Patch-Clamp & Whole-Cell Analyses (`scripts/patch_clamp_whole_cell_in_vitro/`)
 
-This section features a sophisticated dual-implementation approach:
+This section features a dual-implementation approach:
 
 #### **Dual Version Architecture**
 - **v1 (Educational)**: Simple, clear implementations for learning and quick analyses
-- **v2 (Research-Grade)**: Production-ready framework with extensive features
+- **v2 (Research-Grade)**: Higher throughput framework with extensive features
 
 #### **Available Implementations**
 
@@ -374,7 +374,7 @@ class CustomAnalyzer(BaseAnalyzer):
 ```
 
 ### Contributing Guidelines
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## 7. Dependencies & Integration
 
