@@ -4,7 +4,7 @@
 
 ### Overview
 
-This repository presents a sophisticated, dual-implementation framework for in vitro electrophysiology data analysis, developed to demonstrate research capabilities in computational neuroscience. It features both educational (v1) and research-grade (v2) implementations, showcasing progression from fundamental concepts to production-ready analysis pipelines.
+This repository presents a dual-implementation framework for in vitro electrophysiology data analysis, developed to demonstrate research capabilities in computational neuroscience. It features both educational (v1) and research-grade (v2) implementations, showcasing progression from fundamental concepts to production-ready analysis pipelines.
 
 **Key Highlights:**
 - 🔬 **Dual Architecture**: Educational v1 for learning/prototyping, Research-grade v2 for production
