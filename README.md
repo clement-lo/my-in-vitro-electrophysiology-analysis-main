@@ -487,7 +487,3 @@ This repository demonstrates the application of systematic analysis approaches f
 - [NWB](https://www.nwb.org/) - Neurodata standardization
 - [FAIR](https://www.go-fair.org/) - Data principles
 - [BIDS](https://bids.neuroimaging.io/) - Brain imaging data structure
-
----
-
-*Repository developed to demonstrate computational neuroscience capabilities for research positions in neurophysiology and neuroengineering.*
